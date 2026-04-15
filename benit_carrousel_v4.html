@@ -1,0 +1,405 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gd: #0e2b1a; --gm: #1a4a2a; --ga: #2d7a45; --gl: #4caf6e;
+    --w: #fff; --w8: rgba(255,255,255,0.8); --w5: rgba(255,255,255,0.5);
+    --w2: rgba(255,255,255,0.15); --w1: rgba(255,255,255,0.08);
+  }
+  .cw { font-family:'DM Sans',sans-serif; background:var(--gd); min-height:100vh; padding:24px 16px 40px; }
+  .dots { display:flex; justify-content:center; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+  .dot { width:8px; height:8px; border-radius:50%; background:var(--w2); cursor:pointer; transition:all .25s; border:none; padding:0; }
+  .dot.active { background:var(--gl); width:24px; border-radius:4px; }
+  .sc { max-width:540px; margin:0 auto; }
+  .slide { display:none; border-radius:20px; overflow:hidden; min-height:580px; }
+  .slide.active { display:flex; flex-direction:column; }
+  .si { flex:1; display:flex; flex-direction:column; padding:36px 32px; }
+  .dk { background:linear-gradient(145deg,var(--gm),var(--gd)); border:1px solid var(--w2); }
+  .wh { background:#fff; border:1px solid rgba(14,43,26,.15); }
+  .ac { background:linear-gradient(135deg,var(--ga),var(--gd)); border:1px solid var(--w2); }
+
+  /* LOGO — fond vert foncé pour que le logo blanc ressorte sur slide blanche */
+  .logo-b { display:flex; align-items:center; gap:10px; margin-bottom:32px; }
+  .logo-img-wrap {
+    width:38px; height:38px; border-radius:9px; overflow:hidden; flex-shrink:0;
+    background:var(--gd);
+  }
+  .logo-img-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
+  .lt { font-family:'DM Serif Display',serif; font-size:18px; color:#fff; letter-spacing:.02em; }
+  .lt-d { color:var(--gd); }
+
+  .tag { display:inline-block; font-size:11px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; padding:5px 12px; border-radius:20px; margin-bottom:20px; width:fit-content; }
+  .tw { background:var(--w2); color:var(--w8); }
+  .tg { background:rgba(76,175,110,.2); color:var(--gl); }
+  .td { background:rgba(14,43,26,.1); color:var(--ga); }
+
+  .ttl { font-family:'DM Serif Display',serif; font-size:32px; line-height:1.15; margin-bottom:12px; color:#fff; }
+  .ttl-d { color:var(--gd); }
+  .sub { font-size:15px; color:var(--w8); line-height:1.6; margin-bottom:24px; }
+  .div { height:1px; background:var(--w2); margin:20px 0; }
+  .div-d { background:rgba(14,43,26,.12); }
+  .al { width:40px; height:3px; border-radius:2px; background:var(--gl); margin-bottom:20px; }
+  .al-d { background:var(--ga); }
+
+  .ir { display:flex; gap:12px; align-items:flex-start; margin-bottom:14px; }
+  .ic { width:28px; height:28px; border-radius:7px; background:var(--w1); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:13px; }
+  .ic-d { background:rgba(45,122,69,.12); }
+  .il { font-size:11px; text-transform:uppercase; letter-spacing:.1em; font-weight:600; color:var(--w5); margin-bottom:2px; }
+  .il-d { color:#7aaa8a; }
+  .iv { font-size:14px; color:var(--w8); line-height:1.5; }
+  .iv-d { color:#1a3d28; }
+
+  .fc { background:var(--w1); border:1px solid var(--w2); border-radius:14px; padding:18px 20px; margin-bottom:12px; }
+  .fc-l { background:#f0f8f3; border:1px solid rgba(45,122,69,.15); }
+  .ft { font-size:15px; font-weight:600; color:#fff; margin-bottom:6px; }
+  .ft-d { color:var(--gd); }
+  .fd { font-size:13px; color:var(--w8); line-height:1.55; }
+  .fd-d { color:#3a5e47; }
+
+  .sg { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px; }
+  .sb { background:var(--w1); border:1px solid var(--w2); border-radius:12px; padding:14px 16px; text-align:center; }
+  .sb-l { background:#f0f8f3; border:1px solid rgba(45,122,69,.15); }
+  .sn { font-family:'DM Serif Display',serif; font-size:26px; color:var(--gl); display:block; }
+  .sn-d { color:var(--ga); }
+  .sl { font-size:11px; color:var(--w5); margin-top:3px; line-height:1.35; }
+  .sl-d { color:#5a8a6a; }
+
+  .rb { margin:8px 0 6px; }
+  .rl { display:flex; justify-content:space-between; font-size:12px; margin-bottom:5px; }
+  .rl span:first-child { color:var(--w8); }
+  .rl span:last-child { color:var(--gl); font-weight:600; }
+  .rl-d span:first-child { color:#3a5e47; }
+  .rl-d span:last-child { color:var(--ga); }
+  .rbg { height:6px; border-radius:3px; background:var(--w2); overflow:hidden; }
+  .rbg-d { background:rgba(45,122,69,.2); }
+  .rbf { height:100%; border-radius:3px; background:var(--gl); }
+  .rbf-d { background:var(--ga); }
+
+  .hb { background:rgba(76,175,110,.15); border:1px solid rgba(76,175,110,.3); border-radius:12px; padding:14px 18px; margin-top:12px; }
+  .hb-d { background:rgba(45,122,69,.08); border-color:rgba(45,122,69,.2); }
+  .ht { font-size:13px; color:var(--gl); line-height:1.5; }
+  .ht-d { color:var(--ga); }
+
+  .sh { font-size:11px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--gl); margin-bottom:12px; }
+  .sh-d { color:var(--ga); }
+
+  .bl { list-style:none; padding:0; }
+  .bl li { font-size:13px; color:var(--w8); padding:5px 0 5px 16px; position:relative; line-height:1.5; }
+  .bl li::before { content:''; position:absolute; left:0; top:12px; width:5px; height:5px; border-radius:50%; background:var(--gl); }
+  .bl-d li { color:#2a4d38; }
+  .bl-d li::before { background:var(--ga); }
+
+  .tr { display:flex; gap:12px; align-items:flex-start; margin-bottom:14px; position:relative; }
+  .td2 { width:10px; height:10px; border-radius:50%; background:var(--gl); margin-top:5px; flex-shrink:0; position:relative; z-index:1; }
+  .td2-d { background:var(--ga); }
+  .tl2 { position:absolute; left:4px; top:15px; width:2px; height:calc(100% + 10px); background:var(--w2); }
+  .tl2-d { background:rgba(45,122,69,.2); }
+  .ts { font-size:12px; font-weight:600; color:var(--w5); letter-spacing:.08em; text-transform:uppercase; margin-bottom:2px; }
+  .ts-d { color:#7aaa8a; }
+  .tdesc { font-size:13px; color:var(--w8); line-height:1.5; }
+  .tdesc-d { color:#2a4d38; }
+  .tp { font-size:13px; font-weight:600; color:var(--gl); margin-top:3px; }
+  .tp-d { color:var(--ga); }
+
+  .sf { display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:16px; }
+  .fn { font-size:11px; color:var(--w5); letter-spacing:.06em; }
+  .fn-d { color:#7aaa8a; }
+  .fl { font-family:'DM Serif Display',serif; font-size:13px; color:var(--w5); }
+  .fl-d { color:#7aaa8a; }
+
+  .nb { display:flex; justify-content:center; gap:12px; margin-top:20px; }
+  .btn { background:var(--w1); border:1px solid var(--w2); color:var(--w8); font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; padding:10px 22px; border-radius:24px; cursor:pointer; transition:all .2s; }
+  .btn:hover { background:var(--w2); }
+  .btn.p { background:var(--ga); border-color:var(--ga); color:#fff; }
+  .btn.p:hover { background:var(--gl); }
+
+  .tp2 { display:flex; flex-wrap:wrap; gap:7px; margin-top:10px; }
+  .pill { font-size:11px; padding:4px 11px; border-radius:20px; background:var(--w1); color:var(--w8); border:1px solid var(--w2); }
+</style>
+
+<div class="cw">
+  <div class="dots" id="dots"></div>
+  <div class="sc">
+
+    <!-- 1 Cover -->
+    <div class="slide dk active" id="s0">
+      <div class="si">
+        <div class="logo-b">
+          <div class="logo-img-wrap"><img src="/mnt/user-data/uploads/Frame_100.png" alt="BenIT"/></div>
+          <span class="lt">BenIT</span>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+          <div class="tag tw">Compte rendu · Appel prospect</div>
+          <div class="al"></div>
+          <div class="ttl" style="font-size:36px;margin-bottom:16px;">Votre roadmap<br><em>croissance</em></div>
+          <div class="sub">Résumé de notre échange et propositions concrètes pour automatiser votre prospection et votre présence LinkedIn.</div>
+          <div class="div"></div>
+          <div class="ir"><div class="ic">📅</div><div><div class="il">Date</div><div class="iv">Aujourd'hui · Appel de découverte</div></div></div>
+          <div class="ir"><div class="ic">👤</div><div><div class="il">Présenté par</div><div class="iv">Noa Benitez — BenIT</div></div></div>
+        </div>
+        <div class="sf"><span class="fn">01 / 09</span><span class="fl">BenIT</span></div>
+      </div>
+    </div>
+
+    <!-- 2 Problème -->
+    <div class="slide wh" id="s1">
+      <div class="si">
+        <div class="logo-b">
+          <div class="logo-img-wrap"><img src="/mnt/user-data/uploads/Frame_100.png" alt="BenIT"/></div>
+          <span class="lt lt-d">BenIT</span>
+        </div>
+        <div class="tag td">Contexte & problème</div>
+        <div class="al al-d"></div>
+        <div class="ttl ttl-d" style="font-size:28px;">Ce que vous<br>m'avez partagé</div>
+        <div class="div div-d"></div>
+        <div class="ir"><div class="ic ic-d">🎯</div><div><div class="il il-d">Objectif principal</div><div class="iv iv-d">Développer votre clientèle via la prospection active et renforcer votre visibilité en ligne</div></div></div>
+        <div class="ir"><div class="ic ic-d">🚧</div><div><div class="il il-d">Frein identifié</div><div class="iv iv-d">Manque de temps et d'outils pour prospecter efficacement + absence de stratégie de contenu LinkedIn structurée</div></div></div>
+        <div class="ir"><div class="ic ic-d">💡</div><div><div class="il il-d">Solution envisagée initialement</div><div class="iv iv-d">Emailing de masse + quelques posts LinkedIn</div></div></div>
+        <div class="sf"><span class="fn fn-d">02 / 09</span><span class="fl fl-d">BenIT</span></div>
+      </div>
+    </div>
+
+    <!-- 3 Solution Emailing -->
+    <div class="slide dk" id="s2">
+      <div class="si">
+        <div class="logo-b">
+          <div class="logo-img-wrap"><img src="/mnt/user-data/uploads/Frame_100.png" alt="BenIT"/></div>
+          <span class="lt">BenIT</span>
+        </div>
+        <div class="tag tg">Solution · Partie 1</div>
+        <div class="al"></div>
+        <div class="ttl" style="font-size:26px;">Moteur de prospection<br><em>automatisée</em> par email</div>
+        <div style="height:12px;"></div>
+        <div class="fc">
+          <div class="ft">🔍 Collecte automatique de leads</div>
+          <div class="fd">Scraping du répertoire État · Récupération e-mails + noms · 500 nouveaux prospects/semaine · Filtre géographique configurable</div>
+        </div>
+        <div class="fc">
+          <div class="ft">📬 Envoi & relance automatiques</div>
+          <div class="fd">500 mails/semaine rédigés par IA · Nouveau contenu chaque semaine · Relance des anciens contacts + nouveaux prospects</div>
+        </div>
+        <div class="fc">
+          <div class="ft">📊 CRM intégré</div>
+          <div class="fd">Tableau de suivi centralisé · Stats de campagne · Historique des contacts · Vue pipeline claire</div>
+        </div>
+        <div class="sf"><span class="fn">03 / 09</span><span class="fl">BenIT</span></div>
+      </div>
+    </div>
+
+    <!-- 4 Solution LinkedIn -->
+    <div class="slide wh" id="s3">
+      <div class="si">
+        <div class="logo-b">
+          <div class="logo-img-wrap"><img src="/mnt/user-data/uploads/Frame_100.png" alt="BenIT"/></div>
+          <span class="lt lt-d">BenIT</span>
+        </div>
+        <div class="tag td">Solution · Partie 2</div>
+        <div class="al al-d"></div>
+        <div class="ttl ttl-d" style="font-size:26px;">Agent IA<br><em>LinkedIn Content</em></div>
+        <div style="height:12px;"></div>
+        <div class="fc fc-l">
+          <div class="ft ft-d">🎙️ Interview hebdo vocale</div>
+          <div class="fd fd-d">Chaque début de semaine, l'agent vous pose des questions ciblées · Vous répondez en audio · L'IA extrait contexte, anecdotes, actualités</div>
+        </div>
+        <div class="fc fc-l">
+          <div class="ft ft-d">✍️ Rédaction automatique</div>
+          <div class="fd fd-d">3 posts/semaine compte perso · 1 post/semaine compte pro · 1 template d'illustration par post · Tout livré dans Google Sheets prêt à programmer</div>
+        </div>
+        <div class="hb hb-d">
+          <div class="ht ht-d">🎁 <strong>Offert :</strong> Audit profil LinkedIn (bannière, sélection, bio) + Stratégie de contenu personnalisée</div>
+        </div>
+        <div class="sf"><span class="fn fn-d">04 / 09</span><span class="fl fl-d">BenIT</span></div>
+      </div>
+    </div>
+
+    <!-- 5 Projections Emailing — 0,3–1% / 6–20 clients -->
+    <div class="slide ac" id="s4">
+      <div class="si">
+        <div class="logo-b">
+          <div class="logo-img-wrap"><img src="/mnt/user-data/uploads/Frame_100.png" alt="BenIT"/></div>
+          <span class="lt">BenIT</span>
+        </div>
+        <div class="tag tw">Projections · Emailing</div>
+        <div class="al"></div>
+        <div class="ttl" style="font-size:26px;">Ce que vous pouvez<br>attendre concrètement</div>
+        <div style="height:10px;"></div>
+        <div class="sg">
+          <div class="sb"><span class="sn">2 000</span><span class="sl">mails envoyés<br>par mois</span></div>
+          <div class="sb"><span class="sn">6–20</span><span class="sl">clients estimés<br>/mois (0,3–1%)</span></div>
+        </div>
+        <div style="height:12px;"></div>
+        <div class="rb">
+          <div class="rl"><span>Taux de conversion email</span><span>0,3–1%</span></div>
+          <div class="rbg"><div class="rbf" style="width:55%;"></div></div>
+        </div>
+        <div class="rb">
+          <div class="rl"><span>Boost relances prospects</span><span>+30–50%</span></div>
+          <div class="rbg"><div class="rbf" style="width:65%;"></div></div>
+        </div>
+        <div class="hb">
+          <div class="ht">💰 Entre 6 et 20 nouveaux clients/mois · Chaque client génère du MRR récurrent · Les relances automatiques dopent encore ce chiffre</div>
+        </div>
+        <div class="sf"><span class="fn">05 / 09</span><span class="fl">BenIT</span></div>
+      </div>
+    </div>
+
+    <!-- 6 Projections LinkedIn -->
+    <div class="slide wh" id="s5">
+      <div class="si">
+        <div class="logo-b">
+          <div class="logo-img-wrap"><img src="/mnt/user-data/uploads/Frame_100.png" alt="BenIT"/></div>
+          <span class="lt lt-d">BenIT</span>
+        </div>
+        <div class="tag td">Projections · LinkedIn</div>
+        <div class="al al-d"></div>
+        <div class="ttl ttl-d" style="font-size:26px;">Visibilité &<br>opportunités entrantes</div>
+        <div style="height:10px;"></div>
+        <div class="sg">
+          <div class="sb sb-l"><span class="sn sn-d">2 000+</span><span class="sl sl-d">vues estimées<br>par semaine</span></div>
+          <div class="sb sb-l"><span class="sn sn-d">4 posts</span><span class="sl sl-d">rédigés<br>par semaine</span></div>
+        </div>
+        <div style="height:14px;"></div>
+        <div class="sh sh-d">Ce que ça génère concrètement</div>
+        <ul class="bl bl-d">
+          <li>Marque personnelle & entreprise visible auprès de vos prospects idéaux</li>
+          <li>Inbound : prospects qui vous contactent directement</li>
+          <li>Crédibilité et autorité dans votre secteur</li>
+          <li>Contenu cohérent, régulier, sans effort de votre côté</li>
+        </ul>
+        <div class="hb hb-d" style="margin-top:14px;">
+          <div class="ht ht-d">🎁 Audit profil + stratégie de contenu <strong>offerts</strong> pour maximiser l'impact de chaque post dès le départ</div>
+        </div>
+        <div class="sf"><span class="fn fn-d">06 / 09</span><span class="fl fl-d">BenIT</span></div>
+      </div>
+    </div>
+
+    <!-- 7 ROI Temps — emailing 8h/semaine -->
+    <div class="slide dk" id="s6">
+      <div class="si">
+        <div class="logo-b">
+          <div class="logo-img-wrap"><img src="/mnt/user-data/uploads/Frame_100.png" alt="BenIT"/></div>
+          <span class="lt">BenIT</span>
+        </div>
+        <div class="tag tg">ROI · Temps & argent</div>
+        <div class="al"></div>
+        <div class="ttl" style="font-size:26px;">Ce que vous économisez<br><em>réellement</em></div>
+        <div style="height:8px;"></div>
+        <div class="sh">Sans automatisation (à la main @ 30€/h)</div>
+        <div class="sg" style="margin-bottom:14px;">
+          <div class="sb"><span class="sn" style="font-size:20px;">~8h</span><span class="sl">emailing manuel<br>/semaine</span></div>
+          <div class="sb"><span class="sn" style="font-size:20px;">~6h</span><span class="sl">rédaction LinkedIn<br>/semaine</span></div>
+        </div>
+        <div class="rb">
+          <div class="rl"><span>Coût humain emailing /mois</span><span>~960€</span></div>
+          <div class="rbg"><div class="rbf" style="width:65%;"></div></div>
+        </div>
+        <div class="rb">
+          <div class="rl"><span>Coût humain LinkedIn /mois</span><span>~720€</span></div>
+          <div class="rbg"><div class="rbf" style="width:50%;"></div></div>
+        </div>
+        <div class="rb">
+          <div class="rl"><span>Total économisé /mois</span><span style="font-size:15px;">~1 680€</span></div>
+          <div class="rbg"><div class="rbf" style="width:100%;"></div></div>
+        </div>
+        <div class="hb">
+          <div class="ht">ROI positif dès le 1er mois — juste sur le temps libéré, avant même le premier client acquis.</div>
+        </div>
+        <div class="sf"><span class="fn">07 / 09</span><span class="fl">BenIT</span></div>
+      </div>
+    </div>
+
+    <!-- 8 Tarifs -->
+    <div class="slide wh" id="s7">
+      <div class="si">
+        <div class="logo-b">
+          <div class="logo-img-wrap"><img src="/mnt/user-data/uploads/Frame_100.png" alt="BenIT"/></div>
+          <span class="lt lt-d">BenIT</span>
+        </div>
+        <div class="tag td">Tarifs & Plan d'action</div>
+        <div class="al al-d"></div>
+        <div class="ttl ttl-d" style="font-size:26px;">Investissement &<br>calendrier de livraison</div>
+        <div style="height:10px;"></div>
+        <div class="sh sh-d">Planning de paiement</div>
+        <div class="tr">
+          <div style="position:relative;"><div class="td2 td2-d"></div><div class="tl2 tl2-d"></div></div>
+          <div><div class="ts ts-d">Aujourd'hui</div><div class="tdesc tdesc-d">Démarrage module Emailing · Acompte</div><div class="tp tp-d">150 €</div></div>
+        </div>
+        <div class="tr">
+          <div style="position:relative;"><div class="td2 td2-d"></div><div class="tl2 tl2-d"></div></div>
+          <div><div class="ts ts-d">Dans 2 semaines</div><div class="tdesc tdesc-d">Livraison module Emailing · Solde</div><div class="tp tp-d">150 €</div></div>
+        </div>
+        <div class="tr">
+          <div style="position:relative;"><div class="td2 td2-d"></div><div class="tl2 tl2-d"></div></div>
+          <div><div class="ts ts-d">Phase 2 — LinkedIn</div><div class="tdesc tdesc-d">Démarrage module LinkedIn · Acompte</div><div class="tp tp-d">150 €</div></div>
+        </div>
+        <div class="tr">
+          <div><div class="td2 td2-d"></div></div>
+          <div><div class="ts ts-d">+2 semaines</div><div class="tdesc tdesc-d">Livraison module LinkedIn · Solde</div><div class="tp tp-d">150 €</div></div>
+        </div>
+        <div class="hb hb-d" style="margin-top:8px;">
+          <div class="ht ht-d">💎 Total : <strong>600 €</strong> pour les 2 modules complets · Audit + stratégie LinkedIn offerts</div>
+        </div>
+        <div class="sf"><span class="fn fn-d">08 / 09</span><span class="fl fl-d">BenIT</span></div>
+      </div>
+    </div>
+
+    <!-- 9 CTA -->
+    <div class="slide dk" id="s8">
+      <div class="si" style="justify-content:center;text-align:center;">
+        <div class="logo-b" style="justify-content:center;">
+          <div class="logo-img-wrap" style="width:48px;height:48px;border-radius:11px;"><img src="/mnt/user-data/uploads/Frame_100.png" alt="BenIT"/></div>
+          <span class="lt" style="font-size:22px;">BenIT</span>
+        </div>
+        <div style="height:16px;"></div>
+        <div class="tag tg" style="margin:0 auto 20px;">Prochaine étape</div>
+        <div class="ttl" style="font-size:34px;text-align:center;">Prêt à lancer<br>votre <em>machine</em><br>à leads ?</div>
+        <div style="height:16px;"></div>
+        <div class="sub" style="text-align:center;">Une seule action aujourd'hui :<br>valider le démarrage et régler les 150€ d'acompte.<br>Je m'occupe du reste.</div>
+        <div class="div" style="margin:24px 0;"></div>
+        <div class="sg" style="max-width:300px;margin:0 auto 20px;">
+          <div class="sb"><span class="sn">600€</span><span class="sl">investissement<br>total</span></div>
+          <div class="sb"><span class="sn">4 sem.</span><span class="sl">délai livraison<br>complet</span></div>
+        </div>
+        <div class="tp2" style="justify-content:center;">
+          <span class="pill">🚀 Emailing auto</span>
+          <span class="pill">✍️ LinkedIn IA</span>
+          <span class="pill">📊 CRM inclus</span>
+          <span class="pill">🎁 Audit offert</span>
+        </div>
+        <div style="height:20px;"></div>
+        <div style="font-size:14px;color:var(--w8);">Noa Benitez · <span style="color:var(--gl);">BenIT</span></div>
+        <div class="sf" style="justify-content:center;"><span class="fn">09 / 09</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nb">
+    <button class="btn" onclick="cs(-1)">← Précédent</button>
+    <button class="btn p" id="nb" onclick="cs(1)">Suivant →</button>
+  </div>
+</div>
+
+<script>
+  const N = 9; let c = 0;
+  const dc = document.getElementById('dots');
+  for(let i=0;i<N;i++){
+    const d=document.createElement('button');
+    d.className='dot'+(i===0?' active':'');
+    d.onclick=()=>go(i);
+    dc.appendChild(d);
+  }
+  function go(n){
+    document.getElementById('s'+c).classList.remove('active');
+    dc.children[c].classList.remove('active');
+    c=n;
+    document.getElementById('s'+c).classList.add('active');
+    dc.children[c].classList.add('active');
+    const b=document.getElementById('nb');
+    if(c===N-1){b.textContent='↗ Envoyer';b.onclick=()=>sendPrompt('Je veux envoyer ce compte rendu à mon prospect');}
+    else{b.textContent='Suivant →';b.onclick=()=>cs(1);}
+  }
+  function cs(d){go(Math.max(0,Math.min(N-1,c+d)));}
+  go(0);
+</script>
